@@ -1,3 +1,8 @@
+import readline from 'node:readline';
 import randomQuestionPicker from './misc/randomQestionPicker.mjs';
 
-console.log(randomQuestionPicker())
+const readLineInterface = readline.createInterface({
+  input: process.stdin,
+  output: process.stdout,
+});
+
