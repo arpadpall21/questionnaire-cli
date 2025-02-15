@@ -1,6 +1,10 @@
-export const color = {
-  // TODO pick what you need...
-}
+export default {
+  reset: '\x1b[0m',
+  green: '\x1b[32m',
+};
+
+// TODO pick what you need...
+
 
 // Text (Foreground) Colors
 // Color Name	Code

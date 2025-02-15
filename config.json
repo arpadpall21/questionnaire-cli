@@ -1,4 +1,6 @@
 {
   "numberOfQuestions": 5,
+  "minCorrectAnswers": 4,
+  "displayCurrentSuccessRate": true,
   "failFast": false
 }
