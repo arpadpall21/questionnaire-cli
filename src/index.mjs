@@ -3,23 +3,24 @@ import * as readline from 'node:readline';
 import randomQuestionPicker from './misc/randomQestionPicker.mjs';
 import config from './config.mjs';
 import color from './misc/color.mjs';
+import { keyFromStdoutData } from './misc/helpers.mjs';
 
-const { welcome, roules, passMessage, failMessage } = JSON.parse(fs.readFileSync('./content/misc.json', 'utf-8'));
+const { welcomeMessage, roulesMessage, passMessage, failMessage } = JSON.parse(
+  fs.readFileSync('./content/misc.json', 'utf-8'),
+);
 
 const readLineInterface = readline.createInterface({
   input: process.stdin,
   output: process.stdout,
 });
 
-readLineInterface.output.write('\x1B[?25l');
+readLineInterface.output.write('\x1B[?25l'); // hide cursor
 
 process.stdout.on('data', (data) => {
-  const key = data.toString()
-  console.log(data)
-  
-  if (data.toString() === 'q') {
-    // readLineInterface.close();
-    process.exit()
+  const key = keyFromStdoutData(data);
+
+  if (key === 'exit') {
+    process.exit();
   }
 })
 
@@ -32,11 +33,11 @@ process.stdout.on('data', (data) => {
 // console.log(config.minCorrectAnswers)
 
 
-const startTestYes = `  ${color.green}yes ◄${color.reset}\n  no`;
-const startTestNo = '  yes\n  no◄';
+const startTestYes = `  ${color.green}yes ◄${color.reset}\n  no\n`;
+const startTestNo = '  yes\n  no◄\n';
 
-readLineInterface.write(`${welcome}\n`);
-readLineInterface.write(`${roules}\n\nPress 'q' to exit the program\n\n`);
+readLineInterface.write(`${welcomeMessage}\n`);
+readLineInterface.write(`${roulesMessage}\n\nPress 'q' to exit the program\n\n`);
 
 
 
@@ -51,7 +52,7 @@ readLineInterface.write(`Total questions: ${config.numberOfQuestions}\n${require
 readLineInterface.write(`Are you ready to start?\n${startTestYes}`);
 
 
-readline.cursorTo(readLineInterface.output, 0);
-readline.moveCursor(readLineInterface.output, 0, -1);
+// readline.cursorTo(readLineInterface.output, 0);
+// readline.moveCursor(readLineInterface.output, 0, -1);
 
-readline.clearScreenDown(readLineInterface.output);
+// readline.clearScreenDown(readLineInterface.output);
