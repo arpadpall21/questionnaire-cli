@@ -1,6 +1,7 @@
+import fs from 'node:fs';
 import config from '../config.mjs';
 
-export default function randomQuestionPicker() {
+export default function mixQuestions() {
   const questionPool = JSON.parse(fs.readFileSync('./content/questionPool.json', 'utf-8'));
   const nrOfPickedQuestions =
     config.numberOfQuestions > questionPool.length ? questionPool.length : config.numberOfQuestions;
