@@ -5,7 +5,7 @@ let currentQuestionIdx = 0;
 let totalCorrectAnsers = 0;
 let totalFailedAnswers = 0;
 
-const currentQuestionState = {
+const questionState = {
   questionIdx: -1,
   nrOfAnswers: 0,
   selectedAnswer: 0,
@@ -14,11 +14,11 @@ const currentQuestionState = {
 export default function questionHandler(readlineInterface, questionPool, key) {
   const currentQuestion = questionPool[currentQuestionIdx];
 
-  if (currentQuestionIdx !== currentQuestionState.questionIdx) {
+  if (currentQuestionIdx !== questionState.questionIdx) {
     readlineInterface.write(`${currentQuestion.question}\n`);
 
     Object.entries(currentQuestion.answers).forEach(([key, { answer }], i) => {
-      currentQuestionState.nrOfAnswers++;
+      questionState.nrOfAnswers++;
       if (i === 0) {
         readlineInterface.write(`${color.green}  ${answer} ◄\n${color.reset}`);
         return;
@@ -26,17 +26,29 @@ export default function questionHandler(readlineInterface, questionPool, key) {
       readlineInterface.write(`  ${answer}\n`);
     });
 
-    currentQuestionState.questionIdx = currentQuestionIdx;
-    currentQuestionState.selectedAnswer = 0;
+    questionState.questionIdx = currentQuestionIdx;
+    questionState.selectedAnswer = 0;
   } else {
-    currentQuestionState.selectedAnswer++           // todo
+    if (key === 'up') {
+      if (questionState.selectedAnswer <= 0) {
+        questionState.selectedAnswer = questionState.nrOfAnswers - 1;
+      } else {
+        questionState.selectedAnswer -= 1;
+      }
+    } else {
+      if (questionState.selectedAnswer >= questionState.nrOfAnswers - 1) {
+        questionState.selectedAnswer = 0;
+      } else {
+        questionState.selectedAnswer += 1;
+      }
+    }
 
     readline.cursorTo(readlineInterface.output, 0);
-    readline.moveCursor(readlineInterface.output, 0, -currentQuestionState.nrOfAnswers);
+    readline.moveCursor(readlineInterface.output, 0, -questionState.nrOfAnswers);
     readline.clearScreenDown(readlineInterface.output);
 
     Object.entries(currentQuestion.answers).forEach(([key, { answer }], i) => {
-      if (i === currentQuestionState.selectedAnswer) {
+      if (i === questionState.selectedAnswer) {
         readlineInterface.write(`${color.green}  ${answer} ◄\n${color.reset}`);
         return;
       }
