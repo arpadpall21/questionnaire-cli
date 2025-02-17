@@ -12,11 +12,18 @@ const questionState = {
 };
 
 export default function questionHandler(readlineInterface, questionPool, key) {
+  if (key === 'enter' && currentQuestionIdx === 0) {
+    if (questionState.selectedAnswer === 1) {
+      return true;
+    } else {
+      currentQuestionIdx = 1;
+    }
+  }
+
   const currentQuestion = questionPool[currentQuestionIdx];
 
   if (currentQuestionIdx !== questionState.questionIdx) {
     readlineInterface.write(`${currentQuestion.question}\n`);
-
     Object.entries(currentQuestion.answers).forEach(([key, { answer }], i) => {
       questionState.nrOfAnswers++;
       if (i === 0) {
@@ -35,7 +42,8 @@ export default function questionHandler(readlineInterface, questionPool, key) {
       } else {
         questionState.selectedAnswer -= 1;
       }
-    } else {
+    }
+    if (key === 'down') {
       if (questionState.selectedAnswer >= questionState.nrOfAnswers - 1) {
         questionState.selectedAnswer = 0;
       } else {
