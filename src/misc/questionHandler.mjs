@@ -1,15 +1,15 @@
-import color from './misc/color.mjs';
+import color from './color.mjs';
 
-const questionPoolState = {
-  currentQuestion: 0,
-  correctAnsers: 0,
-  failedAnswers: 0,
+const currentQuestion = 0;
+const correctAnsers = 0;
+const failedAnswers = 0;
+
+const currentQuestionState = {
+  nrOfAnswers: 0,
 };
-const currentQuestionState = {};
 
-
-export default function questionHandler(key) {
-  readLineInterface.write(`${questionPool[questionPoolState.currentQuestion]}\n`);
+export default function questionHandler(readLineInterface, questionPool, key) {
+  readLineInterface.write(`${questionPool[currentQuestion].question}\n`);
 }
 
 

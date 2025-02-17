@@ -2,12 +2,9 @@ import fs from 'node:fs';
 import * as readline from 'node:readline';
 import mixQuestions from './misc/questionMixer.mjs';
 import questionHandler from './misc/questionHandler.mjs';
-import config from './config.mjs';
+import { appConfig, appMessages } from './configAndMessages.mjs';
 import { keyFromStdoutData } from './misc/helpers.mjs';
 
-const { welcomeMessage, roulesMessage, passMessage, failMessage } = JSON.parse(
-  fs.readFileSync('./content/misc.json', 'utf-8'),
-);
 
 const startQuestion = {
   question: 'Are you ready to start?',
@@ -31,15 +28,15 @@ process.stdout.on('data', (data) => {
     process.exit();
   }
 
-  questionHandler(questionPool, key);
+  questionHandler(readLineInterface, questionPool, key);
 });
 
-readLineInterface.write(`${welcomeMessage}\n`);
-readLineInterface.write(`${roulesMessage}\n\nPress 'q' to exit the program\n\n`);
+readLineInterface.write(`${appMessages.welcomeMessage}\n`);
+readLineInterface.write(`${appMessages.roulesMessage}\n\nPress 'q' to exit the program\n\n`);
 
 const requiredCorrectAnswers = config.displayCurrentSuccessRate
   ? `Required correct answers: ${config.minCorrectAnswers}\n`
   : '\n';
 readLineInterface.write(`Total questions: ${config.numberOfQuestions}\n${requiredCorrectAnswers}`);
 
-questionHandler(questionPool);
+questionHandler(readLineInterface, questionPool);
