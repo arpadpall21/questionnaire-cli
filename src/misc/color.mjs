@@ -1,6 +1,7 @@
 export default {
   reset: '\x1b[0m',
   green: '\x1b[32m',
+  cyan: '\x1b[36m',
 };
 
 // TODO pick what you need...

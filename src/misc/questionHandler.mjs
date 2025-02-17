@@ -23,7 +23,7 @@ export default function questionHandler(readlineInterface, questionPool, key) {
   const currentQuestion = questionPool[currentQuestionIdx];
 
   if (currentQuestionIdx !== questionState.questionIdx) {
-    readlineInterface.write(`${currentQuestion.question}\n`);
+    readlineInterface.write(`${color.cyan}\n${currentQuestion.question}\n${color.reset}`);
     Object.entries(currentQuestion.answers).forEach(([key, { answer }], i) => {
       questionState.nrOfAnswers++;
       if (i === 0) {
