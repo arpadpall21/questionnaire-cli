@@ -1,57 +1,48 @@
+import * as readline from 'node:readline';
 import color from './color.mjs';
 
-const currentQuestionIdx = 0;
-const totalCorrectAnsers = 0;
-const totalFailedAnswers = 0;
+let currentQuestionIdx = 0;
+let totalCorrectAnsers = 0;
+let totalFailedAnswers = 0;
 
 const currentQuestionState = {
+  questionIdx: -1,
   nrOfAnswers: 0,
   selectedAnswer: 0,
 };
 
-export default function questionHandler(readLineInterface, questionPool, key) {
+export default function questionHandler(readlineInterface, questionPool, key) {
   const currentQuestion = questionPool[currentQuestionIdx];
 
-  readLineInterface.write(`${currentQuestion.question}\n`);
-  Object.entries(currentQuestion.answers).forEach(([key, { answer }], i) => {
-    if (i === currentQuestionState.selectedAnswer) {
-      readLineInterface.write(`${color.green}  ${answer} ◄\n${color.reset}`);
-      return;
-    }
-    readLineInterface.write(`  ${answer}\n`);
-  });
+  if (currentQuestionIdx !== currentQuestionState.questionIdx) {
+    readlineInterface.write(`${currentQuestion.question}\n`);
 
-  
-  // for (let key in currentQuestion.answers) {                  // Process new question
-  //   readLineInterface.write(`${color.green}  ${currentQuestion.answers[key].answer} ◄\n${color.reset}`);      // selected answer
-    
-    
-  //   readLineInterface.write(`  ${currentQuestion.answers[key].answer}\n`);      // not selected answer
-    
-    
-    
-  //   currentQuestionState.nrOfAnswers++;
-  // }
-  
+    Object.entries(currentQuestion.answers).forEach(([key, { answer }], i) => {
+      currentQuestionState.nrOfAnswers++;
+      if (i === 0) {
+        readlineInterface.write(`${color.green}  ${answer} ◄\n${color.reset}`);
+        return;
+      }
+      readlineInterface.write(`  ${answer}\n`);
+    });
+
+    currentQuestionState.questionIdx = currentQuestionIdx;
+    currentQuestionState.selectedAnswer = 0;
+  } else {
+    currentQuestionState.selectedAnswer++           // todo
+
+    readline.cursorTo(readlineInterface.output, 0);
+    readline.moveCursor(readlineInterface.output, 0, -currentQuestionState.nrOfAnswers);
+    readline.clearScreenDown(readlineInterface.output);
+
+    Object.entries(currentQuestion.answers).forEach(([key, { answer }], i) => {
+      if (i === currentQuestionState.selectedAnswer) {
+        readlineInterface.write(`${color.green}  ${answer} ◄\n${color.reset}`);
+        return;
+      }
+      readlineInterface.write(`  ${answer}\n`);
+    });
+  }
+
   return false;
 }
-
-
-
-
-// const startTestYes = `  ${color.green}yes ◄${color.reset}\n  no\n`;
-// const startTestNo = '  yes\n  no◄\n';
-
-
-
-// readLineInterface.write(`Are you ready to start?\n${startTestYes}`);
-
-
-
-
-
-// readline.cursorTo(readLineInterface.output, 0);
-// readline.moveCursor(readLineInterface.output, 0, -1);
-
-// readline.clearScreenDown(readLineInterface.output);
-
