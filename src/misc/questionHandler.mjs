@@ -36,8 +36,9 @@ export default function questionHandler(readlineInterface, questionPool, key) {
         readlineInterface.write(`Incorrect answers so far: ${totalIncorrectAnswers}\n`);
       }
     }
+
     readlineInterface.write(`${color.cyan}${currentQuestion.question}\n${color.reset}`);
-    renderAnswers(readlineInterface, currentQuestion.answers, questionState.selectedAnswer, true);
+    renderAnswers(readlineInterface, currentQuestion.answers, true);
   } else {
     if (key === 'up') {
       if (questionState.selectedAnswer <= 0) {
@@ -58,22 +59,26 @@ export default function questionHandler(readlineInterface, questionPool, key) {
     readline.moveCursor(readlineInterface.output, 0, -questionState.nrOfAnswers);
     readline.clearScreenDown(readlineInterface.output);
 
-    renderAnswers(readlineInterface, currentQuestion.answers, questionState.selectedAnswer);
+    renderAnswers(readlineInterface, currentQuestion.answers);
   }
 
   return false;
 }
 
-function renderAnswers(readlineInterface, answers, selectedAnswerIdx, countAnswers) {
+function renderAnswers(readlineInterface, answers, countAnswers) {
+  // currentQuestionIdx > 0 ?
+
   Object.entries(answers).forEach(([key, { answer }], i) => {
+    const prefix = currentQuestionIdx > 0 ? `${key}) ` : '';
+
     if (countAnswers) {
       questionState.nrOfAnswers++;
     }
-    if (i === selectedAnswerIdx) {
-      readlineInterface.write(`${color.green}  ${answer} ◄\n${color.reset}`);
+    if (i === questionState.selectedAnswer) {
+      readlineInterface.write(`${color.green}   ${prefix}${answer} ◄\n${color.reset}`);
       return;
     }
-    readlineInterface.write(`  ${answer}\n`);
+    readlineInterface.write(`   ${prefix}${answer}\n`);
   });
 }
 
