@@ -24,6 +24,8 @@ export default function questionHandler(readlineInterface, questionPool, key) {
 
   const currentQuestion = questionPool[currentQuestionIdx];
 
+  console.log(currentQuestion)
+
   if (currentQuestionIdx !== questionState.questionIdx) {
     questionState.questionIdx = currentQuestionIdx;
     questionState.selectedAnswer = 0;
@@ -55,18 +57,18 @@ export default function questionHandler(readlineInterface, questionPool, key) {
       }
     }
 
-    readline.cursorTo(readlineInterface.output, 0);
-    readline.moveCursor(readlineInterface.output, 0, -questionState.nrOfAnswers);
-    readline.clearScreenDown(readlineInterface.output);
-
-    renderAnswers(readlineInterface, currentQuestion.answers);
+    renderAnswers(readlineInterface, currentQuestion.answers, false, true);
   }
 
   return false;
 }
 
-function renderAnswers(readlineInterface, answers, countAnswers) {
-  // currentQuestionIdx > 0 ?
+function renderAnswers(readlineInterface, answers, countAnswers, rerender) {
+  if (rerender) {
+    readline.cursorTo(readlineInterface.output, 0);
+    readline.moveCursor(readlineInterface.output, 0, -questionState.nrOfAnswers);
+    readline.clearScreenDown(readlineInterface.output);
+  }
 
   Object.entries(answers).forEach(([key, { answer }], i) => {
     const prefix = currentQuestionIdx > 0 ? `${key}) ` : '';
@@ -75,11 +77,13 @@ function renderAnswers(readlineInterface, answers, countAnswers) {
       questionState.nrOfAnswers++;
     }
     if (i === questionState.selectedAnswer) {
-      readlineInterface.write(`${color.green}   ${prefix}${answer} ◄\n${color.reset}`);
+      readlineInterface.write(`${color.green}${prefix}${answer} ◄\n${color.reset}`);
       return;
     }
-    readlineInterface.write(`   ${prefix}${answer}\n`);
+    readlineInterface.write(`${prefix}${answer}\n`);
   });
+  
+  console.log()
 }
 
 
