@@ -1,9 +1,10 @@
 import * as readline from 'node:readline';
 import color from './color.mjs';
+import { appConfig } from '../jsonReader.mjs';
 
 let currentQuestionIdx = 0;
 let totalCorrectAnsers = 0;
-let totalFailedAnswers = 0;
+let totalIncorrectAnswers = 0;
 
 const questionState = {
   questionIdx: -1,
@@ -28,7 +29,14 @@ export default function questionHandler(readlineInterface, questionPool, key) {
     questionState.selectedAnswer = 0;
     questionState.nrOfAnswers = 0;
 
-    readlineInterface.write(`${color.cyan}\n${currentQuestion.question}\n${color.reset}`);
+    if (currentQuestionIdx > 0) {
+      readlineInterface.write(`\n--- Question: ${currentQuestionIdx}/${appConfig.numberOfQuestions} ---\n`);
+      if (appConfig.displayCurrentSuccessRate) {
+        readlineInterface.write(`Correct answers so far: ${totalCorrectAnsers}\n`);
+        readlineInterface.write(`Incorrect answers so far: ${totalIncorrectAnswers}\n`);
+      }
+    }
+    readlineInterface.write(`${color.cyan}${currentQuestion.question}\n${color.reset}`);
     renderAnswers(readlineInterface, currentQuestion.answers, questionState.selectedAnswer, true);
   } else {
     if (key === 'up') {
