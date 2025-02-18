@@ -1,10 +1,9 @@
 import fs from 'node:fs';
-import config from '../config.mjs';
+import { appConfig } from '../jsonReader.mjs';
 
-export default function mixQuestions() {
-  const questionPool = JSON.parse(fs.readFileSync('./content/questionPool.json', 'utf-8'));
+export default function mixQuestions(questionPool) {
   const nrOfPickedQuestions =
-    config.numberOfQuestions > questionPool.length ? questionPool.length : config.numberOfQuestions;
+    appConfig.numberOfQuestions > questionPool.length ? questionPool.length : appConfig.numberOfQuestions;
   const shuffledQuestionPool = questionPool.sort(() => Math.random() * 2 - 1);
 
   return shuffledQuestionPool.slice(nrOfPickedQuestions);

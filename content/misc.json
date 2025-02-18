@@ -1,6 +1,0 @@
-{
-  "welcomeMessage": "Welocome to Arpad's JavaScript interview questions.",
-  "roulesMessage": "You will be presented with a series of questions, you will need to choose the correct answers (multiple options may be permitted)",
-  "passMessage": "Congratulations, you have successfully completed the test!",
-  "failMessage": "Unfortunately, you did not pass the test this time."
-}

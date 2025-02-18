@@ -2,44 +2,39 @@ import fs from 'node:fs';
 import * as readline from 'node:readline';
 import mixQuestions from './misc/questionMixer.mjs';
 import questionHandler from './misc/questionHandler.mjs';
-import config from './config.mjs';
+import { appConfig, appMessages, questionPool as defaultQuestionPool } from './jsonReader.mjs';
 import { keyFromStdoutData } from './misc/helpers.mjs';
-
-const { welcomeMessage, roulesMessage, passMessage, failMessage } = JSON.parse(
-  fs.readFileSync('./content/misc.json', 'utf-8'),
-);
 
 const startQuestion = {
   question: 'Are you ready to start?',
   answers: { yes: { answer: 'yes' }, no: { answer: 'no' } },
 };
-const questionPool = [startQuestion, ...mixQuestions()];
+const questionPool = [startQuestion, ...mixQuestions(defaultQuestionPool)];
 
-const readLineInterface = readline.createInterface({
+const readlineInterface = readline.createInterface({
   input: process.stdin,
   output: process.stdout,
 });
 
-readLineInterface.output.write('\x1B[?25l'); // hide cursor
+readlineInterface.output.write('\x1B[?25l'); // hide cursor
 
 process.stdout.on('data', (data) => {
   const key = keyFromStdoutData(data);
+  const exit = questionHandler(readlineInterface, questionPool, key);
 
-  if (key === 'exit') {
-    readLineInterface.output.write('\x1B[?25h'); // show cursor
-    readLineInterface.close();
+  if (key === 'exit' || exit) {
+    readlineInterface.output.write('\x1B[?25h'); // show cursor
+    readlineInterface.close();
     process.exit();
   }
-
-  questionHandler(questionPool, key);
 });
 
-readLineInterface.write(`${welcomeMessage}\n`);
-readLineInterface.write(`${roulesMessage}\n\nPress 'q' to exit the program\n\n`);
+readlineInterface.write(`${appMessages.welcome}\n`);
+readlineInterface.write(`${appMessages.roules}\n\nPress 'q' to exit the program\n\n`);
 
-const requiredCorrectAnswers = config.displayCurrentSuccessRate
-  ? `Required correct answers: ${config.minCorrectAnswers}\n`
+const requiredCorrectAnswers = appConfig.displayCurrentSuccessRate
+  ? `Required correct answers: ${appConfig.minCorrectAnswers}\n`
   : '\n';
-readLineInterface.write(`Total questions: ${config.numberOfQuestions}\n${requiredCorrectAnswers}`);
+readlineInterface.write(`Total questions: ${appConfig.numberOfQuestions}\n${requiredCorrectAnswers}`);
 
-questionHandler(questionPool);
+questionHandler(readlineInterface, questionPool);
