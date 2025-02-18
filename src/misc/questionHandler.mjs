@@ -12,11 +12,12 @@ const questionState = {
 };
 
 export default function questionHandler(readlineInterface, questionPool, key) {
-  if (key === 'enter' && currentQuestionIdx === 0) {
-    if (questionState.selectedAnswer === 1) {
+  if (key === 'enter') {
+    if (questionState.selectedAnswer === 1 && currentQuestionIdx === 0) {
+      readlineInterface.write(`${color.yellow}\nGoodbye!\n${color.reset}`);
       return true;
     } else {
-      currentQuestionIdx = 1;
+      currentQuestionIdx += 1;
     }
   }
 
@@ -28,14 +29,7 @@ export default function questionHandler(readlineInterface, questionPool, key) {
     questionState.nrOfAnswers = 0;
 
     readlineInterface.write(`${color.cyan}\n${currentQuestion.question}\n${color.reset}`);
-    Object.entries(currentQuestion.answers).forEach(([key, { answer }], i) => {
-      questionState.nrOfAnswers++;
-      if (i === 0) {
-        readlineInterface.write(`${color.green}  ${answer} ◄\n${color.reset}`);
-        return;
-      }
-      readlineInterface.write(`  ${answer}\n`);
-    });
+    renderAnswers(readlineInterface, currentQuestion.answers, questionState.selectedAnswer, true);
   } else {
     if (key === 'up') {
       if (questionState.selectedAnswer <= 0) {
@@ -56,14 +50,29 @@ export default function questionHandler(readlineInterface, questionPool, key) {
     readline.moveCursor(readlineInterface.output, 0, -questionState.nrOfAnswers);
     readline.clearScreenDown(readlineInterface.output);
 
-    Object.entries(currentQuestion.answers).forEach(([key, { answer }], i) => {
-      if (i === questionState.selectedAnswer) {
-        readlineInterface.write(`${color.green}  ${answer} ◄\n${color.reset}`);
-        return;
-      }
-      readlineInterface.write(`  ${answer}\n`);
-    });
+    renderAnswers(readlineInterface, currentQuestion.answers, questionState.selectedAnswer);
   }
 
   return false;
 }
+
+function renderAnswers(readlineInterface, answers, selectedAnswerIdx, countAnswers) {
+  Object.entries(answers).forEach(([key, { answer }], i) => {
+    if (countAnswers) {
+      questionState.nrOfAnswers++;
+    }
+    if (i === selectedAnswerIdx) {
+      readlineInterface.write(`${color.green}  ${answer} ◄\n${color.reset}`);
+      return;
+    }
+    readlineInterface.write(`  ${answer}\n`);
+  });
+}
+
+
+
+
+
+// ✅
+// ☑
+// ☐
