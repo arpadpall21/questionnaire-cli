@@ -30,7 +30,7 @@ export default function questionHandler(readlineInterface, questionPool, key) {
     questionState.nrOfAnswers = 1;
 
     if (currentQuestionIdx > 0) {
-      readlineInterface.write(`\n--- Question: ${currentQuestionIdx}/${appConfig.numberOfQuestions} ---\n`);
+      readlineInterface.write(`\n----- Question: ${currentQuestionIdx}/${appConfig.numberOfQuestions} -----\n`);
       if (appConfig.displayCurrentSuccessRate) {
         readlineInterface.write(`Correct answers so far: ${totalCorrectAnsers}\n`);
         readlineInterface.write(`Incorrect answers so far: ${totalIncorrectAnswers}\n`);
@@ -73,13 +73,13 @@ function renderAnswers(readlineInterface, answers, countAnswers, rerender) {
   }
 
   Object.entries(answers).forEach(([key, { answer }], i) => {
-    const prefix = currentQuestionIdx > 0 ? `   ${key}) ` : '   ';
+    const prefix = currentQuestionIdx > 0 ? `     ${key}) ` : '     ';
 
     if (countAnswers) {
       questionState.nrOfAnswers++;
     }
     if (i === questionState.selectedAnswer) {
-      readlineInterface.write(`${color.green}${prefix}${answer} ◄\n${color.reset}`);
+      readlineInterface.write(`${color.green}${'► ' + prefix.substring(2)}${answer}\n${color.reset}`);
       return;
     }
     readlineInterface.write(`${prefix}${answer}\n`);
@@ -87,15 +87,13 @@ function renderAnswers(readlineInterface, answers, countAnswers, rerender) {
 
   if (currentQuestionIdx > 0) {
     if (questionState.nrOfAnswers === questionState.selectedAnswer + 1) {
-      readlineInterface.write(`${color.green}next question > ◄\n${color.reset}`);
+      readlineInterface.write(`${color.green}► next question >\n${color.reset}`);
       return;
     }
 
-    readlineInterface.write(`${color.yellow}next question >\n${color.reset}`);
+    readlineInterface.write(`${color.yellow}  next question >\n${color.reset}`);
   }
 }
-
-
 
 
 
