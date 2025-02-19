@@ -1,22 +1,27 @@
 import * as readline from 'node:readline';
 import color from './color.mjs';
+import { appConfig } from '../jsonReader.mjs';
 
 let currentQuestionIdx = 0;
 let totalCorrectAnsers = 0;
-let totalFailedAnswers = 0;
+let totalIncorrectAnswers = 0;
 
 const questionState = {
   questionIdx: -1,
-  nrOfAnswers: 0,
+  nrOfAnswers: 1,
   selectedAnswer: 0,
 };
 
 export default function questionHandler(readlineInterface, questionPool, key) {
-  if (key === 'enter' && currentQuestionIdx === 0) {
-    if (questionState.selectedAnswer === 1) {
-      return true;
-    } else {
-      currentQuestionIdx = 1;
+  if (key === 'enter') {
+    if (currentQuestionIdx === 0) {
+      if (questionState.selectedAnswer === 1) {
+        readlineInterface.write(`${color.yellow}\nGoodbye!\n${color.reset}`);
+        return true;
+      }
+      currentQuestionIdx += 1;
+    } else if (questionState.nrOfAnswers === questionState.selectedAnswer + 1) {
+      currentQuestionIdx += 1;
     }
   }
 
@@ -25,17 +30,18 @@ export default function questionHandler(readlineInterface, questionPool, key) {
   if (currentQuestionIdx !== questionState.questionIdx) {
     questionState.questionIdx = currentQuestionIdx;
     questionState.selectedAnswer = 0;
-    questionState.nrOfAnswers = 0;
+    questionState.nrOfAnswers = 1;
 
-    readlineInterface.write(`${color.cyan}\n${currentQuestion.question}\n${color.reset}`);
-    Object.entries(currentQuestion.answers).forEach(([key, { answer }], i) => {
-      questionState.nrOfAnswers++;
-      if (i === 0) {
-        readlineInterface.write(`${color.green}  ${answer} ◄\n${color.reset}`);
-        return;
+    if (currentQuestionIdx > 0) {
+      readlineInterface.write(`\n----- Question: ${currentQuestionIdx}/${appConfig.numberOfQuestions} -----\n`);
+      if (appConfig.displayCurrentSuccessRate) {
+        readlineInterface.write(`Correct answers so far: ${totalCorrectAnsers}\n`);
+        readlineInterface.write(`Incorrect answers so far: ${totalIncorrectAnswers}\n`);
       }
-      readlineInterface.write(`  ${answer}\n`);
-    });
+    }
+
+    readlineInterface.write(`${color.cyan}${currentQuestion.question}\n${color.reset}`);
+    renderAnswers(readlineInterface, currentQuestion.answers, true);
   } else {
     if (key === 'up') {
       if (questionState.selectedAnswer <= 0) {
@@ -52,18 +58,48 @@ export default function questionHandler(readlineInterface, questionPool, key) {
       }
     }
 
-    readline.cursorTo(readlineInterface.output, 0);
-    readline.moveCursor(readlineInterface.output, 0, -questionState.nrOfAnswers);
-    readline.clearScreenDown(readlineInterface.output);
-
-    Object.entries(currentQuestion.answers).forEach(([key, { answer }], i) => {
-      if (i === questionState.selectedAnswer) {
-        readlineInterface.write(`${color.green}  ${answer} ◄\n${color.reset}`);
-        return;
-      }
-      readlineInterface.write(`  ${answer}\n`);
-    });
+    renderAnswers(readlineInterface, currentQuestion.answers, false, true);
   }
 
   return false;
 }
+
+function renderAnswers(readlineInterface, answers, countAnswers, rerender) {
+  if (rerender) {
+    readline.cursorTo(readlineInterface.output, 0);
+    readline.moveCursor(
+      readlineInterface.output,
+      0,
+      currentQuestionIdx > 0 ? -questionState.nrOfAnswers : -questionState.nrOfAnswers + 1,
+    );
+    readline.clearScreenDown(readlineInterface.output);
+  }
+
+  Object.entries(answers).forEach(([key, { answer }], i) => {
+    const prefix = currentQuestionIdx > 0 ? `     ${key}) ` : '     ';
+
+    if (countAnswers) {
+      questionState.nrOfAnswers++;
+    }
+    if (i === questionState.selectedAnswer) {
+      readlineInterface.write(`${color.green}${'► ' + prefix.substring(2)}${answer}\n${color.reset}`);
+      return;
+    }
+    readlineInterface.write(`${prefix}${answer}\n`);
+  });
+
+  if (currentQuestionIdx > 0) {
+    if (questionState.nrOfAnswers === questionState.selectedAnswer + 1) {
+      readlineInterface.write(`${color.green}► next question >\n${color.reset}`);
+      return;
+    }
+
+    readlineInterface.write(`${color.yellow}  next question >\n${color.reset}`);
+  }
+}
+
+
+
+// ✅
+// ☑
+// ☐

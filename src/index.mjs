@@ -9,7 +9,8 @@ const startQuestion = {
   question: 'Are you ready to start?',
   answers: { yes: { answer: 'yes' }, no: { answer: 'no' } },
 };
-const questionPool = [startQuestion, ...mixQuestions(defaultQuestionPool)];
+// const questionPool = [startQuestion, ...mixQuestions(defaultQuestionPool)];        // TODO
+const questionPool = [startQuestion, ...defaultQuestionPool];
 
 const readlineInterface = readline.createInterface({
   input: process.stdin,
@@ -33,7 +34,7 @@ readlineInterface.write(`${appMessages.welcome}\n`);
 readlineInterface.write(`${appMessages.roules}\n\nPress 'q' to exit the program\n\n`);
 
 const requiredCorrectAnswers = appConfig.displayCurrentSuccessRate
-  ? `Required correct answers: ${appConfig.minCorrectAnswers}\n`
+  ? `Required correct answers: ${appConfig.minCorrectAnswers}\n\n`
   : '\n';
 readlineInterface.write(`Total questions: ${appConfig.numberOfQuestions}\n${requiredCorrectAnswers}`);
 
