@@ -8,13 +8,13 @@ let totalIncorrectAnswers = 0;
 
 const questionState = {
   questionIdx: -1,
-  nrOfAnswers: 0,
+  nrOfAnswers: 1,
   selectedAnswer: 0,
 };
 
 export default function questionHandler(readlineInterface, questionPool, key) {
   if (key === 'enter') {
-    if (questionState.selectedAnswer === 1 && currentQuestionIdx === 0) {
+    if (currentQuestionIdx === 0 && questionState.selectedAnswer === 1) {
       readlineInterface.write(`${color.yellow}\nGoodbye!\n${color.reset}`);
       return true;
     } else {
@@ -24,12 +24,10 @@ export default function questionHandler(readlineInterface, questionPool, key) {
 
   const currentQuestion = questionPool[currentQuestionIdx];
 
-  console.log(currentQuestion)
-
   if (currentQuestionIdx !== questionState.questionIdx) {
     questionState.questionIdx = currentQuestionIdx;
     questionState.selectedAnswer = 0;
-    questionState.nrOfAnswers = 0;
+    questionState.nrOfAnswers = 1;
 
     if (currentQuestionIdx > 0) {
       readlineInterface.write(`\n--- Question: ${currentQuestionIdx}/${appConfig.numberOfQuestions} ---\n`);
@@ -66,12 +64,16 @@ export default function questionHandler(readlineInterface, questionPool, key) {
 function renderAnswers(readlineInterface, answers, countAnswers, rerender) {
   if (rerender) {
     readline.cursorTo(readlineInterface.output, 0);
-    readline.moveCursor(readlineInterface.output, 0, -questionState.nrOfAnswers);
+    readline.moveCursor(
+      readlineInterface.output,
+      0,
+      currentQuestionIdx > 0 ? -questionState.nrOfAnswers : -questionState.nrOfAnswers + 1,
+    );
     readline.clearScreenDown(readlineInterface.output);
   }
 
   Object.entries(answers).forEach(([key, { answer }], i) => {
-    const prefix = currentQuestionIdx > 0 ? `${key}) ` : '';
+    const prefix = currentQuestionIdx > 0 ? `   ${key}) ` : '   ';
 
     if (countAnswers) {
       questionState.nrOfAnswers++;
@@ -82,8 +84,15 @@ function renderAnswers(readlineInterface, answers, countAnswers, rerender) {
     }
     readlineInterface.write(`${prefix}${answer}\n`);
   });
-  
-  console.log()
+
+  if (currentQuestionIdx > 0) {
+    if (questionState.nrOfAnswers === questionState.selectedAnswer + 1) {
+      readlineInterface.write(`${color.green}next question > ◄\n${color.reset}`);
+      return;
+    }
+
+    readlineInterface.write(`${color.yellow}next question >\n${color.reset}`);
+  }
 }
 
 
