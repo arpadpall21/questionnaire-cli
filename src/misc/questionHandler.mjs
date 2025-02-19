@@ -14,10 +14,13 @@ const questionState = {
 
 export default function questionHandler(readlineInterface, questionPool, key) {
   if (key === 'enter') {
-    if (currentQuestionIdx === 0 && questionState.selectedAnswer === 1) {
-      readlineInterface.write(`${color.yellow}\nGoodbye!\n${color.reset}`);
-      return true;
-    } else {
+    if (currentQuestionIdx === 0) {
+      if (questionState.selectedAnswer === 1) {
+        readlineInterface.write(`${color.yellow}\nGoodbye!\n${color.reset}`);
+        return true;
+      }
+      currentQuestionIdx += 1;
+    } else if (questionState.nrOfAnswers === questionState.selectedAnswer + 1) {
       currentQuestionIdx += 1;
     }
   }
