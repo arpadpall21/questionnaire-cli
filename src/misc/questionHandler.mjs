@@ -22,6 +22,7 @@ export default function questionHandler(readlineInterface, questionPool, key) {
       currentQuestionIdx += 1;
     } else {
       if (questionState.nrOfAnswers === questionState.selectedAnswer + 1) {
+        processCorrectAnswers(questionPool[currentQuestionIdx].answers);
         currentQuestionIdx += 1;
       } else {
         questionPool[currentQuestionIdx].answers[questionState.selectedAnswer].checked =
@@ -97,5 +98,17 @@ function renderAnswers(readlineInterface, answers, countAnswers, rerender) {
     }
 
     readlineInterface.write(`${color.yellow}  next question >\n${color.reset}`);
+  }
+}
+
+function processCorrectAnswers(answers) {
+  if (
+    answers.every(({ correct, checked }) => {
+      return correct == !!checked;
+    })
+  ) {
+    totalCorrectAnsers += 1;
+  } else {
+    totalIncorrectAnswers += 1;
   }
 }
