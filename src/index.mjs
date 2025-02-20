@@ -9,8 +9,8 @@ const startQuestion = {
   question: 'Are you ready to start?',
   answers: [{ answer: 'yes' }, { answer: 'no' }],
 };
-const questionPool = [startQuestion, ...mixQuestions(defaultQuestionPool)];        // TODO
-// const questionPool = [startQuestion, ...defaultQuestionPool];          // TODO
+const initialQuestionPool = appConfig.mixQuestions ? mixQuestions(defaultQuestionPool) : defaultQuestionPool;
+const questionPool = [startQuestion, ...initialQuestionPool];
 
 const readlineInterface = readline.createInterface({
   input: process.stdin,
