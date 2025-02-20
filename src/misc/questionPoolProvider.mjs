@@ -1,8 +1,7 @@
 import fs from 'node:fs';
-import { appConfig } from '../jsonReader.mjs';
+import { appConfig, questionPool } from '../jsonReader.mjs';
 
-export default function mixQuestions(questionPool) {
-  console.log('mixed!')
+export default function questionPoolProvider(mixQuestions) {
   const nrOfPickedQuestions =
     appConfig.numberOfQuestions > questionPool.length ? questionPool.length : appConfig.numberOfQuestions;
   const mixedQuestionPool = questionPool.sort(() => Math.random() * 2 - 1);

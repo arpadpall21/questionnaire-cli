@@ -76,7 +76,7 @@ function renderAnswers(readlineInterface, answers, countAnswers, rerender) {
 
   answers.forEach(({ answer, checked }, i) => {
     const check = checked ? '✅' : ' ';
-    const prefix = currentQuestionIdx > 0 ? `  ${check} ${i}) ` : `  ${check} `;
+    const prefix = currentQuestionIdx > 0 ? `  ${check} ${i + 1}) ` : `  ${check} `;
 
     if (countAnswers) {
       questionState.nrOfAnswers++;
@@ -87,20 +87,6 @@ function renderAnswers(readlineInterface, answers, countAnswers, rerender) {
     }
     readlineInterface.write(`${prefix}${answer}\n`);
   });
-
-  // Object.entries(answers).forEach(([key, { answer, checked }], i) => {
-  //   const check = checked ? '✅' : ' ';
-  //   const prefix = currentQuestionIdx > 0 ? `  ${check} ${key}) ` : `  ${check} `;
-
-  //   if (countAnswers) {
-  //     questionState.nrOfAnswers++;
-  //   }
-  //   if (i === questionState.selectedAnswer) {
-  //     readlineInterface.write(`${color.green}${'► ' + prefix.substring(2)}${answer}\n${color.reset}`);
-  //     return;
-  //   }
-  //   readlineInterface.write(`${prefix}${answer}\n`);
-  // });
 
   if (currentQuestionIdx > 0) {
     if (questionState.nrOfAnswers === questionState.selectedAnswer + 1) {
