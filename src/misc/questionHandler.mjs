@@ -23,6 +23,10 @@ export default function questionHandler(readlineInterface, questionPool, key) {
     } else {
       if (questionState.nrOfAnswers === questionState.selectedAnswer + 1) {
         processCorrectAnswers(questionPool[currentQuestionIdx].answers);
+        if (questionPool.length <= currentQuestionIdx + 1) {
+          renderEndResult(readlineInterface, totalCorrectAnsers >= appConfig.minCorrectAnswers);
+          return;
+        }
         currentQuestionIdx += 1;
       } else {
         questionPool[currentQuestionIdx].answers[questionState.selectedAnswer].checked =
@@ -115,8 +119,9 @@ function processCorrectAnswers(answers) {
 
 function renderEndResult(readlineInterface, testPassed) {
   const resultMessage = testPassed ? appMessages.pass : appMessages.fail;
+  const messageColor = testPassed ? color.green : color.red;
 
-  readlineInterface.write(`${color.yellow}${resultMessage}\n`);
+  readlineInterface.write(`\n\n${messageColor}${resultMessage}\n`);
   readlineInterface.write(`Correct answer: ${totalCorrectAnsers}\n`);
   readlineInterface.write(`Incorrect answers: ${totalIncorrectAnswers}${color.reset}\n`);
 }
