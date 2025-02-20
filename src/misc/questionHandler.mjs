@@ -24,9 +24,8 @@ export default function questionHandler(readlineInterface, questionPool, key) {
       if (questionState.nrOfAnswers === questionState.selectedAnswer + 1) {
         currentQuestionIdx += 1;
       } else {
-        const currentQuestion = questionPool[currentQuestionIdx];
-        currentQuestion.answers[questionState.selectedAnswer].checked =
-          !currentQuestion.answers[questionState.selectedAnswer].checked;
+        questionPool[currentQuestionIdx].answers[questionState.selectedAnswer].checked =
+          !questionPool[currentQuestionIdx].answers[questionState.selectedAnswer].checked;
       }
     }
   }
