@@ -1,6 +1,6 @@
 import * as readline from 'node:readline';
 import color from './color.mjs';
-import { appConfig } from '../jsonReader.mjs';
+import { appConfig, appMessages } from '../jsonReader.mjs';
 
 let currentQuestionIdx = 0;
 let totalCorrectAnsers = 0;
@@ -111,4 +111,12 @@ function processCorrectAnswers(answers) {
   } else {
     totalIncorrectAnswers += 1;
   }
+}
+
+function renderEndResult(readlineInterface, testPassed) {
+  const resultMessage = testPassed ? appMessages.pass : appMessages.fail;
+
+  readlineInterface.write(`${color.yellow}${resultMessage}\n`);
+  readlineInterface.write(`Correct answer: ${totalCorrectAnsers}\n`);
+  readlineInterface.write(`Incorrect answers: ${totalIncorrectAnswers}${color.reset}\n`);
 }
