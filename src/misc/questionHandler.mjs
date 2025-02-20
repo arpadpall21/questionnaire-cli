@@ -78,7 +78,7 @@ function renderAnswers(readlineInterface, answers, countAnswers, rerender) {
   }
 
   answers.forEach(({ answer, checked }, i) => {
-    const check = checked ? '✅' : ' ';
+    const check = checked ? '✅' : '  ';
     const prefix = currentQuestionIdx > 0 ? `  ${check} ${i + 1}) ` : `  ${check} `;
 
     if (countAnswers) {
