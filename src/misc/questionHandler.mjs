@@ -8,8 +8,8 @@ let totalIncorrectAnswers = 0;
 
 const questionState = {
   questionIdx: -1,
-  nrOfAnswers: 1,
   selectedAnswer: 0,
+  nrOfAnswers: 0,
 };
 
 export default function questionHandler(readlineInterface, questionPool, key) {
@@ -20,8 +20,13 @@ export default function questionHandler(readlineInterface, questionPool, key) {
         return true;
       }
       currentQuestionIdx += 1;
-    } else if (questionState.nrOfAnswers === questionState.selectedAnswer + 1) {
-      currentQuestionIdx += 1;
+    } else {
+      if (questionState.nrOfAnswers === questionState.selectedAnswer + 1) {
+        currentQuestionIdx += 1;
+      } else {
+        questionPool[currentQuestionIdx].answers[questionState.selectedAnswer].checked =
+          !questionPool[currentQuestionIdx].answers[questionState.selectedAnswer].checked;
+      }
     }
   }
 
@@ -30,7 +35,7 @@ export default function questionHandler(readlineInterface, questionPool, key) {
   if (currentQuestionIdx !== questionState.questionIdx) {
     questionState.questionIdx = currentQuestionIdx;
     questionState.selectedAnswer = 0;
-    questionState.nrOfAnswers = 1;
+    questionState.nrOfAnswers = currentQuestionIdx === 0 ? 0 : 1;
 
     if (currentQuestionIdx > 0) {
       readlineInterface.write(`\n----- Question: ${currentQuestionIdx}/${appConfig.numberOfQuestions} -----\n`);
@@ -67,16 +72,13 @@ export default function questionHandler(readlineInterface, questionPool, key) {
 function renderAnswers(readlineInterface, answers, countAnswers, rerender) {
   if (rerender) {
     readline.cursorTo(readlineInterface.output, 0);
-    readline.moveCursor(
-      readlineInterface.output,
-      0,
-      currentQuestionIdx > 0 ? -questionState.nrOfAnswers : -questionState.nrOfAnswers + 1,
-    );
+    readline.moveCursor(readlineInterface.output, 0, -questionState.nrOfAnswers);
     readline.clearScreenDown(readlineInterface.output);
   }
 
-  Object.entries(answers).forEach(([key, { answer }], i) => {
-    const prefix = currentQuestionIdx > 0 ? `     ${key}) ` : '     ';
+  answers.forEach(({ answer, checked }, i) => {
+    const check = checked ? '✅' : '  ';
+    const prefix = currentQuestionIdx > 0 ? `  ${check} ${i + 1}) ` : `  ${check} `;
 
     if (countAnswers) {
       questionState.nrOfAnswers++;
@@ -97,9 +99,3 @@ function renderAnswers(readlineInterface, answers, countAnswers, rerender) {
     readlineInterface.write(`${color.yellow}  next question >\n${color.reset}`);
   }
 }
-
-
-
-// ✅
-// ☑
-// ☐

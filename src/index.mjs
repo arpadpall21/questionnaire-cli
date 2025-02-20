@@ -1,16 +1,15 @@
 import fs from 'node:fs';
 import * as readline from 'node:readline';
-import mixQuestions from './misc/questionMixer.mjs';
+import questionPoolProvider from './misc/questionPoolProvider.mjs';
 import questionHandler from './misc/questionHandler.mjs';
-import { appConfig, appMessages, questionPool as defaultQuestionPool } from './jsonReader.mjs';
+import { appConfig, appMessages } from './jsonReader.mjs';
 import { keyFromStdoutData } from './misc/helpers.mjs';
 
 const startQuestion = {
   question: 'Are you ready to start?',
-  answers: { yes: { answer: 'yes' }, no: { answer: 'no' } },
+  answers: [{ answer: 'yes' }, { answer: 'no' }],
 };
-// const questionPool = [startQuestion, ...mixQuestions(defaultQuestionPool)];        // TODO
-const questionPool = [startQuestion, ...defaultQuestionPool];
+const questionPool = [startQuestion, ...questionPoolProvider(appConfig.mixQuestions)];
 
 const readlineInterface = readline.createInterface({
   input: process.stdin,

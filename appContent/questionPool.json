@@ -1,172 +1,172 @@
 [
   {
     "question": "What will be the output of the following code snippet?\n> console.log(typeof null);",
-    "answers": {
-      "a": { "answer": "object", "correct": true },
-      "b": { "answer": "null", "correct": false },
-      "c": { "answer": "undefined", "correct": false },
-      "d": { "answer": "number", "correct": false },
-      "e": { "answer": "string", "correct": false }
-    }
+    "answers": [
+      { "answer": "object", "correct": true },
+      { "answer": "null", "correct": false },
+      { "answer": "undefined", "correct": false },
+      { "answer": "number", "correct": false },
+      { "answer": "string", "correct": false }
+    ]
   },
   {
     "question": "Which of the following are valid ways to create an object in JavaScript?",
-    "answers": {
-      "a": { "answer": "var obj1 = {};", "correct": true },
-      "b": { "answer": "var obj2 = new Object();", "correct": true },
-      "c": { "answer": "var obj3 = Object.create(null);", "correct": true },
-      "d": { "answer": "var obj4 = [];", "correct": false },
-      "e": { "answer": "var obj5 = {}; // object literal", "correct": true }
-    }
+    "answers": [
+      { "answer": "var obj1 = {};", "correct": true },
+      { "answer": "var obj2 = new Object();", "correct": true },
+      { "answer": "var obj3 = Object.create(null);", "correct": true },
+      { "answer": "var obj4 = [];", "correct": false },
+      { "answer": "var obj5 = {}; // object literal", "correct": true }
+    ]
   },
   {
     "question": "What will be the output of the following code snippet?\n> console.log(0 == false);",
-    "answers": {
-      "a": { "answer": "true", "correct": true },
-      "b": { "answer": "false", "correct": false },
-      "c": { "answer": "undefined", "correct": false }
-    }
+    "answers": [
+      { "answer": "true", "correct": true },
+      { "answer": "false", "correct": false },
+      { "answer": "undefined", "correct": false }
+    ]
   },
   {
     "question": "Which of the following methods can be used to convert a string to a number in JavaScript?",
-    "answers": {
-      "a": { "answer": "Number('123')", "correct": true },
-      "b": { "answer": "parseInt('123')", "correct": true },
-      "c": { "answer": "String(123)", "correct": false },
-      "d": { "answer": "parseFloat('123.45')", "correct": true },
-      "e": { "answer": "convertToNumber('123')", "correct": false }
-    }
+    "answers": [
+      { "answer": "Number('123')", "correct": true },
+      { "answer": "parseInt('123')", "correct": true },
+      { "answer": "String(123)", "correct": false },
+      { "answer": "parseFloat('123.45')", "correct": true },
+      { "answer": "convertToNumber('123')", "correct": false }
+    ]
   },
   {
     "question": "What will be the output of the following code snippet?\n> console.log([1] == true);",
-    "answers": {
-      "a": { "answer": "true", "correct": true },
-      "b": { "answer": "false", "correct": false },
-      "c": { "answer": "undefined", "correct": false }
-    }
+    "answers": [
+      { "answer": "true", "correct": true },
+      { "answer": "false", "correct": false },
+      { "answer": "undefined", "correct": false }
+    ]
   },
   {
     "question": "Which of the following are ways to declare a variable in JavaScript?",
-    "answers": {
-      "a": { "answer": "var", "correct": true },
-      "b": { "answer": "let", "correct": true },
-      "c": { "answer": "const", "correct": true },
-      "d": { "answer": "define", "correct": false },
-      "e": { "answer": "declare", "correct": false }
-    }
+    "answers": [
+      { "answer": "var", "correct": true },
+      { "answer": "let", "correct": true },
+      { "answer": "const", "correct": true },
+      { "answer": "define", "correct": false },
+      { "answer": "declare", "correct": false }
+    ]
   },
   {
     "question": "What will be the output of the following code snippet?\n> console.log(1 + '1');",
-    "answers": {
-      "a": { "answer": "11", "correct": true },
-      "b": { "answer": "2", "correct": false },
-      "c": { "answer": "undefined", "correct": false },
-      "d": { "answer": "NaN", "correct": false }
-    }
+    "answers": [
+      { "answer": "11", "correct": true },
+      { "answer": "2", "correct": false },
+      { "answer": "undefined", "correct": false },
+      { "answer": "NaN", "correct": false }
+    ]
   },
   {
     "question": "What is the result of the following expression?\n> console.log(5 === '5');",
-    "answers": {
-      "a": { "answer": "true", "correct": false },
-      "b": { "answer": "false", "correct": true },
-      "c": { "answer": "undefined", "correct": false },
-      "d": { "answer": "null", "correct": false }
-    }
+    "answers": [
+      { "answer": "true", "correct": false },
+      { "answer": "false", "correct": true },
+      { "answer": "undefined", "correct": false },
+      { "answer": "null", "correct": false }
+    ]
   },
   {
     "question": "Which of the following are JavaScript data types?",
-    "answers": {
-      "a": { "answer": "String", "correct": true },
-      "b": { "answer": "Number", "correct": true },
-      "c": { "answer": "Character", "correct": false },
-      "d": { "answer": "Boolean", "correct": true },
-      "e": { "answer": "Object", "correct": true }
-    }
+    "answers": [
+      { "answer": "String", "correct": true },
+      { "answer": "Number", "correct": true },
+      { "answer": "Character", "correct": false },
+      { "answer": "Boolean", "correct": true },
+      { "answer": "Object", "correct": true }
+    ]
   },
   {
     "question": "What will be the output of the following code snippet?\n> console.log(typeof NaN);",
-    "answers": {
-      "a": { "answer": "number", "correct": true },
-      "b": { "answer": "NaN", "correct": false },
-      "c": { "answer": "undefined", "correct": false },
-      "d": { "answer": "object", "correct": false },
-      "e": { "answer": "string", "correct": false }
-    }
+    "answers": [
+      { "answer": "number", "correct": true },
+      { "answer": "NaN", "correct": false },
+      { "answer": "undefined", "correct": false },
+      { "answer": "object", "correct": false },
+      { "answer": "string", "correct": false }
+    ]
   },
   {
     "question": "Which of the following is a way to create a function in JavaScript?",
-    "answers": {
-      "a": { "answer": "function myFunction() {}", "correct": true },
-      "b": { "answer": "var myFunction = function() {}", "correct": true },
-      "c": { "answer": "myFunction() => {}", "correct": false },
-      "d": { "answer": "const myFunction = () => {}", "correct": true },
-      "e": { "answer": "function: myFunction() {}", "correct": false }
-    }
+    "answers": [
+      { "answer": "function myFunction() {}", "correct": true },
+      { "answer": "var myFunction = function() {}", "correct": true },
+      { "answer": "myFunction() => {}", "correct": false },
+      { "answer": "const myFunction = () => {}", "correct": true },
+      { "answer": "function: myFunction() {}", "correct": false }
+    ]
   },
   {
     "question": "What will be the output of the following code snippet?\n> console.log([2] == [2]);",
-    "answers": {
-      "a": { "answer": "true", "correct": false },
-      "b": { "answer": "false", "correct": true },
-      "c": { "answer": "undefined", "correct": false },
-      "d": { "answer": "null", "correct": false }
-    }
+    "answers": [
+      { "answer": "true", "correct": false },
+      { "answer": "false", "correct": true },
+      { "answer": "undefined", "correct": false },
+      { "answer": "null", "correct": false }
+    ]
   },
   {
     "question": "Which of the following are valid ways to define an array in JavaScript?",
-    "answers": {
-      "a": { "answer": "var arr = [];", "correct": true },
-      "b": { "answer": "var arr = new Array();", "correct": true },
-      "c": { "answer": "var arr = array();", "correct": false },
-      "d": { "answer": "var arr = Array(1, 2, 3);", "correct": true },
-      "e": { "answer": "var arr = {}; // object", "correct": false }
-    }
+    "answers": [
+      { "answer": "var arr = [];", "correct": true },
+      { "answer": "var arr = new Array();", "correct": true },
+      { "answer": "var arr = array();", "correct": false },
+      { "answer": "var arr = Array(1, 2, 3);", "correct": true },
+      { "answer": "var arr = {}; // object", "correct": false }
+    ]
   },
   {
     "question": "What will be the output of the following code snippet?\n> console.log('5' - 3);",
-    "answers": {
-      "a": { "answer": "2", "correct": true },
-      "b": { "answer": "53", "correct": false },
-      "c": { "answer": "undefined", "correct": false },
-      "d": { "answer": "NaN", "correct": false }
-    }
+    "answers": [
+      { "answer": "2", "correct": true },
+      { "answer": "53", "correct": false },
+      { "answer": "undefined", "correct": false },
+      { "answer": "NaN", "correct": false }
+    ]
   },
   {
     "question": "Which of the following are valid ways to handle asynchronous code in JavaScript?",
-    "answers": {
-      "a": { "answer": "Promises", "correct": true },
-      "b": { "answer": "async/await", "correct": true },
-      "c": { "answer": "Callbacks", "correct": true },
-      "d": { "answer": "Synchronous", "correct": false },
-      "e": { "answer": "Deferred", "correct": false }
-    }
+    "answers": [
+      { "answer": "Promises", "correct": true },
+      { "answer": "async/await", "correct": true },
+      { "answer": "Callbacks", "correct": true },
+      { "answer": "Synchronous", "correct": false },
+      { "answer": "Deferred", "correct": false }
+    ]
   },
   {
     "question": "What will be the output of the following code snippet?\n> console.log(1 && 0);",
-    "answers": {
-      "a": { "answer": "1", "correct": false },
-      "b": { "answer": "0", "correct": true },
-      "c": { "answer": "undefined", "correct": false },
-      "d": { "answer": "null", "correct": false }
-    }
+    "answers": [
+      { "answer": "1", "correct": false },
+      { "answer": "0", "correct": true },
+      { "answer": "undefined", "correct": false },
+      { "answer": "null", "correct": false }
+    ]
   },
   {
     "question": "Which of the following are valid ways to iterate over an array in JavaScript?",
-    "answers": {
-      "a": { "answer": "for loop", "correct": true },
-      "b": { "answer": "forEach()", "correct": true },
-      "c": { "answer": "map()", "correct": true },
-      "d": { "answer": "while loop", "correct": true },
-      "e": { "answer": "loop()", "correct": false }
-    }
+    "answers": [
+      { "answer": "for loop", "correct": true },
+      { "answer": "forEach()", "correct": true },
+      { "answer": "map()", "correct": true },
+      { "answer": "while loop", "correct": true },
+      { "answer": "loop()", "correct": false }
+    ]
   },
   {
     "question": "What will be the output of the following code snippet?\n> console.log('Hello' + ' ' + 'World');",
-    "answers": {
-      "a": { "answer": "Hello World", "correct": true },
-      "b": { "answer": "HelloWorld", "correct": false },
-      "c": { "answer": "undefined", "correct": false },
-      "d": { "answer": "null", "correct": false }
-    }
+    "answers": [
+      { "answer": "Hello World", "correct": true },
+      { "answer": "HelloWorld", "correct": false },
+      { "answer": "undefined", "correct": false },
+      { "answer": "null", "correct": false }
+    ]
   }
 ]
