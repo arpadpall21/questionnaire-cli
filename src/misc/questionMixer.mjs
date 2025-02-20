@@ -6,5 +6,7 @@ export default function mixQuestions(questionPool) {
     appConfig.numberOfQuestions > questionPool.length ? questionPool.length : appConfig.numberOfQuestions;
   const shuffledQuestionPool = questionPool.sort(() => Math.random() * 2 - 1);
 
+  console.log('------------')
+
   return shuffledQuestionPool.slice(0, nrOfPickedQuestions);
 }

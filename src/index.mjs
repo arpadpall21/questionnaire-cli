@@ -7,10 +7,10 @@ import { keyFromStdoutData } from './misc/helpers.mjs';
 
 const startQuestion = {
   question: 'Are you ready to start?',
-  answers: { yes: { answer: 'yes' }, no: { answer: 'no' } },
+  answers: [{ answer: 'yes' }, { answer: 'no' }],
 };
-// const questionPool = [startQuestion, ...mixQuestions(defaultQuestionPool)];        // TODO
-const questionPool = [startQuestion, ...defaultQuestionPool];
+const questionPool = [startQuestion, ...mixQuestions(defaultQuestionPool)];        // TODO
+// const questionPool = [startQuestion, ...defaultQuestionPool];          // TODO
 
 const readlineInterface = readline.createInterface({
   input: process.stdin,
