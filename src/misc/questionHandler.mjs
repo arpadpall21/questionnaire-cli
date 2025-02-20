@@ -6,7 +6,11 @@ let currentQuestionIdx = 0;
 let totalCorrectAnsers = 0;
 let totalIncorrectAnswers = 0;
 
-const questionState = { questionIdx: -1 };
+const questionState = {
+  questionIdx: -1,
+  selectedAnswer: 0,
+  nrOfAnswers: 0,
+};
 
 export default function questionHandler(readlineInterface, questionPool, key) {
   if (key === 'enter') {
@@ -19,6 +23,7 @@ export default function questionHandler(readlineInterface, questionPool, key) {
     } else {
       if (questionState.nrOfAnswers === questionState.selectedAnswer + 1) {
         currentQuestionIdx += 1;
+      } else {
       }
     }
   }
@@ -71,7 +76,7 @@ function renderAnswers(readlineInterface, answers, countAnswers, rerender) {
 
   Object.entries(answers).forEach(([key, { answer, checked }], i) => {
     const check = checked ? '✅' : ' ';
-    const prefix = currentQuestionIdx > 0 ? `  ${check} ${key})` : `  ${check} `;
+    const prefix = currentQuestionIdx > 0 ? `  ${check} ${key}) ` : `  ${check} `;
 
     if (countAnswers) {
       questionState.nrOfAnswers++;
@@ -92,9 +97,3 @@ function renderAnswers(readlineInterface, answers, countAnswers, rerender) {
     readlineInterface.write(`${color.yellow}  next question >\n${color.reset}`);
   }
 }
-
-
-
-// ✅
-// ☑
-// ☐
