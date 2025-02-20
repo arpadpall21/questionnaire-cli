@@ -25,7 +25,7 @@ export default function questionHandler(readlineInterface, questionPool, key) {
         processCorrectAnswers(questionPool[currentQuestionIdx].answers);
         if (questionPool.length <= currentQuestionIdx + 1) {
           renderEndResult(readlineInterface, totalCorrectAnsers >= appConfig.minCorrectAnswers);
-          return;
+          return true;
         }
         currentQuestionIdx += 1;
       } else {
