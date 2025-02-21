@@ -109,11 +109,7 @@ function renderAnswers(readlineInterface, answers, countAnswers, rerender) {
 }
 
 function processCorrectAnswers(answers) {
-  if (
-    answers.every(({ correct, checked }) => {
-      return correct === !!checked;
-    })
-  ) {
+  if (answers.every(({ correct, checked }) => correct === !!checked)) {
     totalCorrectAnsers += 1;
   } else {
     totalIncorrectAnswers += 1;
