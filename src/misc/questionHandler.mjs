@@ -1,6 +1,6 @@
 import * as readline from 'node:readline';
 import color from './color.mjs';
-import { appConfig } from '../jsonReader.mjs';
+import { appConfig, appMessages } from '../jsonReader.mjs';
 
 let currentQuestionIdx = 0;
 let totalCorrectAnsers = 0;
@@ -22,6 +22,14 @@ export default function questionHandler(readlineInterface, questionPool, key) {
       currentQuestionIdx += 1;
     } else {
       if (questionState.nrOfAnswers === questionState.selectedAnswer + 1) {
+        processCorrectAnswers(questionPool[currentQuestionIdx].answers);
+        if (
+          (appConfig.failFast && totalIncorrectAnswers > appConfig.numberOfQuestions - appConfig.minCorrectAnswers) ||
+          questionPool.length <= currentQuestionIdx + 1
+        ) {
+          renderEndResult(readlineInterface, totalCorrectAnsers >= appConfig.minCorrectAnswers);
+          return true;
+        }
         currentQuestionIdx += 1;
       } else {
         questionPool[currentQuestionIdx].answers[questionState.selectedAnswer].checked =
@@ -98,4 +106,21 @@ function renderAnswers(readlineInterface, answers, countAnswers, rerender) {
 
     readlineInterface.write(`${color.yellow}  next question >\n${color.reset}`);
   }
+}
+
+function processCorrectAnswers(answers) {
+  if (answers.every(({ correct, checked }) => correct === !!checked)) {
+    totalCorrectAnsers += 1;
+  } else {
+    totalIncorrectAnswers += 1;
+  }
+}
+
+function renderEndResult(readlineInterface, testPassed) {
+  const resultMessage = testPassed ? appMessages.pass : appMessages.fail;
+  const messageColor = testPassed ? color.green : color.red;
+
+  readlineInterface.write(`\n\n${messageColor}${resultMessage}\n`);
+  readlineInterface.write(`Correct answer: ${totalCorrectAnsers}\n`);
+  readlineInterface.write(`Incorrect answers: ${totalIncorrectAnswers}${color.reset}\n`);
 }

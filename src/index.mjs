@@ -32,9 +32,7 @@ process.stdout.on('data', (data) => {
 readlineInterface.write(`${appMessages.welcome}\n`);
 readlineInterface.write(`${appMessages.roules}\n\nPress 'q' to exit the program\n\n`);
 
-const requiredCorrectAnswers = appConfig.displayCurrentSuccessRate
-  ? `Required correct answers: ${appConfig.minCorrectAnswers}\n\n`
-  : '\n';
-readlineInterface.write(`Total questions: ${appConfig.numberOfQuestions}\n${requiredCorrectAnswers}`);
+readlineInterface.write(`Total questions: ${appConfig.numberOfQuestions}\n`);
+readlineInterface.write(`Required correct answers: ${appConfig.minCorrectAnswers}\n\n`);
 
 questionHandler(readlineInterface, questionPool);

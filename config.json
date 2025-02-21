@@ -1,7 +1,7 @@
 {
-  "numberOfQuestions": 5,
-  "minCorrectAnswers": 4,
-  "mixQuestions": false,
+  "numberOfQuestions": 10,
+  "minCorrectAnswers": 8,
+  "mixQuestions": true,
   "displayCurrentSuccessRate": true,
   "failFast": false
 }
