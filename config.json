@@ -2,6 +2,6 @@
   "numberOfQuestions": 10,
   "minCorrectAnswers": 8,
   "mixQuestions": true,
-  "displayCurrentSuccessRate": false,
+  "displayCurrentSuccessRate": true,
   "failFast": false
 }

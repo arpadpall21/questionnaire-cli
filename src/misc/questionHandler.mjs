@@ -23,7 +23,10 @@ export default function questionHandler(readlineInterface, questionPool, key) {
     } else {
       if (questionState.nrOfAnswers === questionState.selectedAnswer + 1) {
         processCorrectAnswers(questionPool[currentQuestionIdx].answers);
-        if (questionPool.length <= currentQuestionIdx + 1) {
+        if (
+          (appConfig.failFast && totalIncorrectAnswers > appConfig.numberOfQuestions - appConfig.minCorrectAnswers) ||
+          questionPool.length <= currentQuestionIdx + 1
+        ) {
           renderEndResult(readlineInterface, totalCorrectAnsers >= appConfig.minCorrectAnswers);
           return true;
         }
@@ -108,7 +111,7 @@ function renderAnswers(readlineInterface, answers, countAnswers, rerender) {
 function processCorrectAnswers(answers) {
   if (
     answers.every(({ correct, checked }) => {
-      return correct == !!checked;
+      return correct === !!checked;
     })
   ) {
     totalCorrectAnsers += 1;
