@@ -14,11 +14,11 @@
 ## Usage
   - Start the app with `npm start`
 
-#### Content Configuration
+### Content Configuration
   - The `appContent/questionPool.json` contains test questions
   - The `appContent/message.json` contains test messages (like welcomme and test rules)
 
-#### Content Configuration
+### Test Configuration
   - The `config.json` configures the test flow
 ```
 {
