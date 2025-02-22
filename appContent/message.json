@@ -1,6 +1,6 @@
 {
   "welcome": "Welocome to Arpad's JavaScript interview questions.",
-  "roules": "You will be presented with a series of questions, you will need to choose the correct answers (multiple options may be permitted)",
+  "rules": "You will be presented with a series of questions, you will need to choose the correct answers (multiple options may be permitted)",
   "pass": "Congratulations, you have successfully completed the test!",
   "fail": "Unfortunately, you did not pass the test this time."
 }
