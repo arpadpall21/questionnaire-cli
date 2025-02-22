@@ -22,10 +22,10 @@
   - The `config.json` configures the test flow
 ```
 {
-  "numberOfQuestions": 10,                  // number of test questions
-  "minCorrectAnswers": 8,                   // minimum correct answers requred to pass the test
-  "mixQuestions": true,                     // questions are presented randomly (false = sequencial)
-  "displayCurrentSuccessRate": true,        // displays the current correct and incorrect answers during the test
-  "failFast": false                         // terminates the test as soon as incorrect answer treshold reached
+  "numberOfQuestions": 10,            // number of test questions
+  "minCorrectAnswers": 8,             // minimum correct answers requred to pass the test
+  "mixQuestions": true,               // questions are presented randomly (false = sequencial)
+  "displayCurrentSuccessRate": true,  // displays the current correct and incorrect answers during the test
+  "failFast": false                   // terminates the test as soon as incorrect answer treshold reached
 }
 ```
