@@ -30,7 +30,7 @@ process.stdout.on('data', (data) => {
 });
 
 readlineInterface.write(`${appMessages.welcome}\n`);
-readlineInterface.write(`${appMessages.roules}\n\nPress 'q' to exit the program\n\n`);
+readlineInterface.write(`${appMessages.rules}\n\nPress 'q' to exit the program\n\n`);
 
 readlineInterface.write(`Total questions: ${appConfig.numberOfQuestions}\n`);
 readlineInterface.write(`Required correct answers: ${appConfig.minCorrectAnswers}\n\n`);
