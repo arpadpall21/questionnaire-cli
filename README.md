@@ -16,7 +16,7 @@
 
 ### Content Configuration
   - The `appContent/questionPool.json` contains test questions
-  - The `appContent/message.json` contains test messages (like welcome and test rules)
+  - The `appContent/message.json` configures application messages (like welcome and test rules)
 
 ### Test Configuration
   - The `config.json` configures the test flow
